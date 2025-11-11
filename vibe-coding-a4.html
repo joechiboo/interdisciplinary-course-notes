@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCL Vibe Coding 體驗挑戰賽</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            color: #333;
+            background: white;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(90deg, rgba(13, 148, 136, 0.02) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(13, 148, 136, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 10mm;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 15px 10px 10px;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+            border-radius: 8px;
+            border: 2px solid #0d9488;
+            box-shadow: 0 2px 4px rgba(13, 148, 136, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                #0d9488 10%,
+                #14b8a6 20%,
+                #0d9488 30%,
+                transparent 40%,
+                transparent 60%,
+                #0d9488 70%,
+                #14b8a6 80%,
+                #0d9488 90%,
+                transparent 100%
+            );
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                #0d9488 10%,
+                #14b8a6 20%,
+                #0d9488 30%,
+                transparent 40%,
+                transparent 60%,
+                #0d9488 70%,
+                #14b8a6 80%,
+                #0d9488 90%,
+                transparent 100%
+            );
+        }
+
+        h1 {
+            font-size: 22pt;
+            font-weight: 900;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #0d9488;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .intro {
+            font-size: 9pt;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #0d9488;
+            margin: 12px 0 8px 0;
+            padding: 4px 8px;
+            padding-bottom: 3px;
+            border-bottom: 2px solid #0d9488;
+            border-left: 4px solid #0d9488;
+            background: linear-gradient(90deg, rgba(13, 148, 136, 0.08) 0%, transparent 100%);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #0d9488;
+            border-left: 3px solid #0d9488;
+            border-radius: 6px;
+            padding: 10px;
+            position: relative;
+            box-shadow: 2px 2px 0px rgba(13, 148, 136, 0.1);
+        }
+
+        .card h3 {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .card p {
+            font-size: 8pt;
+            color: #6b7280;
+            line-height: 1.3;
+        }
+
+        .icon {
+            font-size: 18pt;
+            margin-bottom: 4px;
+        }
+
+        .info-box {
+            background: #ecfdf5;
+            border-left: 4px solid #0d9488;
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+
+        .info-box h3 {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #0d9488;
+            margin-bottom: 4px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            font-size: 9pt;
+        }
+
+        .info-box li {
+            margin-bottom: 2px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .info-box li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #0d9488;
+        }
+
+        .info-box strong {
+            font-weight: 600;
+            color: #065f46;
+        }
+
+        .timeline {
+            font-size: 8pt;
+            border-left: 2px solid #0d9488;
+            padding-left: 10px;
+            margin-left: 5px;
+        }
+
+        .timeline-item {
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #0d9488;
+            border-radius: 50%;
+            position: absolute;
+            left: -13px;
+            top: 3px;
+        }
+
+        .timeline-item strong {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .timeline-item .time {
+            color: #0d9488;
+            font-size: 7pt;
+        }
+
+        .rewards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .reward-item {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 9pt;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .reward-item:nth-child(2) {
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            border-color: #9ca3af;
+        }
+
+        .reward-item:nth-child(3) {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            border-color: #fb923c;
+        }
+
+        .reward-item:nth-child(4) {
+            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+            border-color: #5eead4;
+        }
+
+        .scoring {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .score-bar {
+            flex: 1;
+            text-align: center;
+        }
+
+        .score-bar-fill {
+            background: #0d9488;
+            color: white;
+            padding: 4px;
+            border-radius: 4px 4px 0 0;
+            font-weight: 700;
+            font-size: 11pt;
+        }
+
+        .score-bar-label {
+            background: #e5e7eb;
+            padding: 4px;
+            font-size: 7pt;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            gap: 6px;
+            font-size: 8pt;
+        }
+
+        .benefit-item::before {
+            content: "✓";
+            color: #0d9488;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .benefit-item strong {
+            font-weight: 700;
+            color: #065f46;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #0d9488;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta {
+            background: #0d9488;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 11pt;
+            display: inline-block;
+            border: 2px solid #0d9488;
+            box-shadow: 2px 2px 0px rgba(13, 148, 136, 0.2);
+        }
+
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #0d9488;
+            border-radius: 6px;
+            padding: 4px;
+            background: white;
+        }
+
+        .qr-label {
+            font-size: 7pt;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            footer {
+                page-break-inside: avoid;
+                margin-top: 10px;
+            }
+
+            .footer-content {
+                page-break-inside: avoid;
+            }
+
+            .cta {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .qr-code {
+                display: block !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UCL Vibe Coding 體驗挑戰賽</h1>
+            <p class="subtitle">與 AI 對話，提升創造力</p>
+            <p class="intro">寓教於樂的 AI 體驗活動 | 不需程式基礎 | 豐厚現金獎勵</p>
+        </header>
+
+        <!-- 活動目的 -->
+        <h2>活動目的</h2>
+        <div class="grid-4">
+            <div class="card">
+                <div class="icon">💡</div>
+                <h3>了解新趨勢</h3>
+                <p>體驗 AI 技術應用</p>
+            </div>
+            <div class="card">
+                <div class="icon">🤝</div>
+                <h3>跨部門合作</h3>
+                <p>自由組隊激發火花</p>
+            </div>
+            <div class="card">
+                <div class="icon">🏆</div>
+                <h3>趣味挑戰</h3>
+                <p>遊戲化學習成長</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎖️</div>
+                <h3>榮譽激勵</h3>
+                <p>豐厚現金獎勵</p>
+            </div>
+        </div>
+
+        <!-- 基本資訊 & 流程 -->
+        <div class="grid-2">
+            <div>
+                <h2>活動資訊</h2>
+                <div class="info-box">
+                    <ul>
+                        <li><strong>對象：</strong>全體員工（無需程式背景）</li>
+                        <li><strong>時間：</strong>2025/11/16 12:30-16:30</li>
+                        <li><strong>地點：</strong>公司本部 6F</li>
+                        <li><strong>組隊：</strong>1-3 人自由組隊</li>
+                        <li><strong>工具：</strong>Gemini CLI、ChatGPT、VS Code</li>
+                        <li><strong>需求：</strong>筆記型電腦 + Google 帳號</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <h2>活動流程</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong>活動開場</strong> <span class="time">(0:00-0:15)</span><br>
+                        介紹規則與獎勵
+                    </div>
+                    <div class="timeline-item">
+                        <strong>Vibe Coding 示範</strong> <span class="time">(0:15-0:35)</span><br>
+                        展示 AI 協作流程
+                    </div>
+                    <div class="timeline-item">
+                        <strong>老闆抽題</strong> <span class="time">(0:35-0:45)</span><br>
+                        公布挑戰主題
+                    </div>
+                    <div class="timeline-item">
+                        <strong>挑戰時間！</strong> <span class="time">(0:45-2:45)</span><br>
+                        各組創作作品
+                    </div>
+                    <div class="timeline-item">
+                        <strong>匿名交件</strong> <span class="time">(2:45-3:00)</span><br>
+                        確保評分公平
+                    </div>
+                    <div class="timeline-item">
+                        <strong>展示與評分</strong> <span class="time">(3:00-3:40)</span><br>
+                        評審團評分
+                    </div>
+                    <div class="timeline-item">
+                        <strong>頒獎</strong> <span class="time">(3:40-4:00)</span><br>
+                        公布名次與頒獎
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vibe Coding 流程 -->
+        <h2>Vibe Coding 四步驟</h2>
+        <div class="grid-4">
+            <div class="card">
+                <h3>1️⃣ 環境設定</h3>
+                <p>安裝 VS Code、Node.js 與 Gemini CLI</p>
+            </div>
+            <div class="card">
+                <h3>2️⃣ 描述需求</h3>
+                <p>用自然語言與 AI 對話</p>
+            </div>
+            <div class="card">
+                <h3>3️⃣ 檢視成果</h3>
+                <p>AI 快速生成程式碼</p>
+            </div>
+            <div class="card">
+                <h3>4️⃣ 持續優化</h3>
+                <p>提出修改需求，反覆調整</p>
+            </div>
+        </div>
+
+        <!-- 預期效益 -->
+        <h2>預期效益</h2>
+        <div class="benefits">
+            <div class="benefit-item">
+                <div><strong>技能提升：</strong>了解 AI 實際應用，提升數位素養</div>
+            </div>
+            <div class="benefit-item">
+                <div><strong>團隊合作：</strong>促進跨部門交流，共同解決問題</div>
+            </div>
+            <div class="benefit-item">
+                <div><strong>凝聚向心力：</strong>提升員工參與感與歸屬感</div>
+            </div>
+            <div class="benefit-item">
+                <div><strong>公司形象：</strong>展現擁抱新科技的積極態度</div>
+            </div>
+        </div>
+
+        <footer>
+            <p style="font-size: 10pt; color: #6b7280; margin-bottom: 5px;">
+                <strong>準備好接受挑戰了嗎？</strong><br>
+                不需要程式基礎，只要有想法，就能創造無限可能！
+            </p>
+            <div class="footer-content">
+                <a href="https://forms.gle/fHjMLaJjntQ9G7Cm8" class="cta">立即報名</a>
+                <div class="qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://forms.gle/fHjMLaJjntQ9G7Cm8" alt="報名QR Code" class="qr-code">
+                    <span class="qr-label">掃碼報名</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
